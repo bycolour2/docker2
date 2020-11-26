@@ -1,0 +1,21 @@
+version: "3.0"
+services:
+  api:
+    build: ./
+    container_name: api
+    restart: always
+    read_only: true
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mariadb
+
+  mariadb:
+    ports:
+      - "4306:3306"
+    container_name: mariadb
+    environment:
+      - MARIADB_ROOT_PASSWORD=password123
+      - MARIADB_ROOT_HOST=api
+      - MARIADB_DATABASE=demo
+    image: "mariadb/server:latest"
